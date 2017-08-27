@@ -27,7 +27,9 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
+    /* smartyを使いたい場合は、このエスケープ外してください。
+    public $viewClass = 'App\View\SmartyView';
+    */
     /**
      * Initialization hook method.
      *
@@ -37,6 +39,14 @@ class AppController extends Controller
      *
      * @return void
      */
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
+		$imgObj  = array();
+		$this->set('imgObj',$imgObj);
+
+		$this->Auth->allow(['index', 'view', 'display','page']);
+   }
+   
     public function initialize()
     {
         parent::initialize();
@@ -44,6 +54,17 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Auth', [
+            'loginRedirect' => [
+                'controller' => 'Articles',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Pages',
+                'action' => 'display',
+                'home'
+            ]
+        ]);
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -58,6 +79,7 @@ class AppController extends Controller
      * @param \Cake\Event\Event $event The beforeRender event.
      * @return \Cake\Network\Response|null|void
      */
+     
     public function beforeRender(Event $event)
     {
         if (!array_key_exists('_serialize', $this->viewVars) &&

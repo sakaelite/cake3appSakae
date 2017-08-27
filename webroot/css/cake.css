@@ -354,8 +354,11 @@ table {
     background: #fff;
     margin-bottom: 1.25rem;
     border: none;
+
     table-layout: fixed;
+/**
     width: 100%;
+*/
 }
 
 table thead {

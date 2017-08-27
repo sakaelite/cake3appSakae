@@ -34,24 +34,46 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
-    </div>
-    <footer>
-    </footer>
+<table width="800" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#E6FFFF">
+  <tr>
+    <td>
+        <table width="800" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
+          <tr>
+            <td bgcolor="#E6FFFF">
+              <p><?php echo $this->Html->image('logo.gif',array('width'=>'157','height'=>'22'));?></p>
+              <table style="margin-bottom:0px" width="800" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
+                        <tr>
+                          <td><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36','url'=>array('controller'=>'user','action'=>'index')));?></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                        </tr>
+                        <tr>
+                          <td><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36','url'=>array('controller'=>'user','action'=>'index')));?></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="qr/index.php"><?php echo $this->Html->image('HeaderMenu/menu_qr.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                          <td><a href="Shinkies"><?php echo $this->Html->image('HeaderMenu/menu_shinki.gif',array('width'=>'105','height'=>'36'));?></a></td>
+                        </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        		<?php echo $this->element('SubHeader');?>
+        
+            <?= $this->Flash->render() ?>
+            <div class="container clearfix">
+                <?= $this->fetch('content') ?>
+            </div>
+            <footer>
+            </footer>
+    </td> 
+  </tr>
+</table>
 </body>
 </html>
