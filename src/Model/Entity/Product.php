@@ -7,30 +7,27 @@ use Cake\ORM\Entity;
  * Product Entity
  *
  * @property string $id
- * @property string $p_id
+ * @property string $product_code
  * @property string $name
  * @property float $basic_weight
  * @property int $price
  * @property string $customer_id
- * @property string $grade_id
- * @property string $color_id
+ * @property string $material_id
+ * @property string $grade
+ * @property string $color
  * @property int $torisu
  * @property float $cycle
  * @property int $primary_p
  * @property int $gaityu
  * @property int $genjyou
  * @property int $delete_flag
- * @property string $created_emp_id
+ * @property string $created_emp_code
  * @property \Cake\I18n\FrozenTime $created_at
- * @property string $updated_emp_id
+ * @property string $updated_emp_code
  * @property \Cake\I18n\FrozenTime $updated_at
  *
- * @property \App\Model\Entity\P $p
  * @property \App\Model\Entity\Customer $customer
- * @property \App\Model\Entity\Grade $grade
- * @property \App\Model\Entity\Color $color
- * @property \App\Model\Entity\CreatedEmp $created_emp
- * @property \App\Model\Entity\UpdatedEmp $updated_emp
+ * @property \App\Model\Entity\Material $material
  * @property \App\Model\Entity\Katakouzous[] $katakouzous
  * @property \App\Model\Entity\KensahyouHead[] $kensahyou_heads
  * @property \App\Model\Entity\Konpous[] $konpous

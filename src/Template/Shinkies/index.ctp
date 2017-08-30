@@ -3,7 +3,7 @@
 <?php $i = 0; ?>
 <?php foreach ($imgSubObj as $key => $val): ?>
           <?php if($i == 6){echo "</tr>\n<tr>\n";} ?>
-          <td align="center"><a href="<?= $val ?>"><img src="img/<?= $key ?>" width="120" height="36" alt="<?= $val ?>"></a></td>
+          <td align="center"><a href="<?= $val ?>"><img src="/img/<?= $key ?>" width="120" height="36" alt="<?= $val ?>"></a></td>
       <?php $i++; ?>
 <?php endforeach; ?>
 </tr>

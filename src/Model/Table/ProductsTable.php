@@ -9,12 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Products Model
  *
- * @property \App\Model\Table\PsTable|\Cake\ORM\Association\BelongsTo $Ps
  * @property \App\Model\Table\CustomersTable|\Cake\ORM\Association\BelongsTo $Customers
- * @property \App\Model\Table\GradesTable|\Cake\ORM\Association\BelongsTo $Grades
- * @property \App\Model\Table\ColorsTable|\Cake\ORM\Association\BelongsTo $Colors
- * @property \App\Model\Table\CreatedEmpsTable|\Cake\ORM\Association\BelongsTo $CreatedEmps
- * @property \App\Model\Table\UpdatedEmpsTable|\Cake\ORM\Association\BelongsTo $UpdatedEmps
+ * @property \App\Model\Table\MaterialsTable|\Cake\ORM\Association\BelongsTo $Materials
  * @property \App\Model\Table\KatakouzousTable|\Cake\ORM\Association\HasMany $Katakouzous
  * @property \App\Model\Table\KensahyouHeadsTable|\Cake\ORM\Association\HasMany $KensahyouHeads
  * @property \App\Model\Table\KonpousTable|\Cake\ORM\Association\HasMany $Konpous
@@ -46,26 +42,12 @@ class ProductsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Ps', [
-            'foreignKey' => 'p_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('Customers', [
             'foreignKey' => 'customer_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Grades', [
-            'foreignKey' => 'grade_id'
-        ]);
-        $this->belongsTo('Colors', [
-            'foreignKey' => 'color_id'
-        ]);
-        $this->belongsTo('CreatedEmps', [
-            'foreignKey' => 'created_emp_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('UpdatedEmps', [
-            'foreignKey' => 'updated_emp_id'
+        $this->belongsTo('Materials', [
+            'foreignKey' => 'material_id'
         ]);
         $this->hasMany('Katakouzous', [
             'foreignKey' => 'product_id'
@@ -97,6 +79,10 @@ class ProductsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->requirePresence('product_code', 'create')
+            ->notEmpty('product_code');
+
+        $validator
             ->allowEmpty('name');
 
         $validator
@@ -108,6 +94,12 @@ class ProductsTable extends Table
             ->integer('price')
             ->requirePresence('price', 'create')
             ->notEmpty('price');
+
+        $validator
+            ->allowEmpty('grade');
+
+        $validator
+            ->allowEmpty('color');
 
         $validator
             ->integer('torisu')
@@ -139,9 +131,18 @@ class ProductsTable extends Table
             ->notEmpty('delete_flag');
 
         $validator
+            ->uuid('created_emp_code')
+            ->requirePresence('created_emp_code', 'create')
+            ->notEmpty('created_emp_code');
+
+        $validator
             ->dateTime('created_at')
             ->requirePresence('created_at', 'create')
             ->notEmpty('created_at');
+
+        $validator
+            ->uuid('updated_emp_code')
+            ->allowEmpty('updated_emp_code');
 
         $validator
             ->dateTime('updated_at')
@@ -159,12 +160,8 @@ class ProductsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['p_id'], 'Ps'));
         $rules->add($rules->existsIn(['customer_id'], 'Customers'));
-        $rules->add($rules->existsIn(['grade_id'], 'Grades'));
-        $rules->add($rules->existsIn(['color_id'], 'Colors'));
-        $rules->add($rules->existsIn(['created_emp_id'], 'CreatedEmps'));
-        $rules->add($rules->existsIn(['updated_emp_id'], 'UpdatedEmps'));
+        $rules->add($rules->existsIn(['material_id'], 'Materials'));
 
         return $rules;
     }

@@ -20,7 +20,8 @@ class UsersFixture extends TestFixture
         'id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'username' => ['type' => 'string', 'length' => 50, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'role' => ['type' => 'string', 'length' => 20, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'role' => ['type' => 'uuid', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'employee_id' => ['type' => 'uuid', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'created_at' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'updated_at' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
@@ -40,12 +41,13 @@ class UsersFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => '0adeafce-76bd-486a-9577-ecf6d62f2575',
+            'id' => '05583940-d40f-4967-9572-d2c7e831d523',
             'username' => 'Lorem ipsum dolor sit amet',
             'password' => 'Lorem ipsum dolor sit amet',
-            'role' => 'Lorem ipsum dolor ',
-            'created_at' => '2017-08-19 13:53:47',
-            'updated_at' => '2017-08-19 13:53:47'
+            'role' => 'b42777af-72c6-433e-a69d-e3741816c372',
+            'employee_id' => '361b9170-e6ab-48e5-a613-d7bdedf23e24',
+            'created_at' => '2017-08-28 11:41:06',
+            'updated_at' => '2017-08-28 11:41:06'
         ],
     ];
 }

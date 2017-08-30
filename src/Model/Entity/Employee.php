@@ -7,20 +7,18 @@ use Cake\ORM\Entity;
  * Employee Entity
  *
  * @property string $id
- * @property string $emp_id
+ * @property string $emp_code
  * @property string $f_name
  * @property string $l_name
- * @property string $e_add
+ * @property string $email
  * @property int $status_leader
  * @property int $status_emp
- * @property string $created_emp_id
+ * @property string $created_emp_code
  * @property \Cake\I18n\FrozenTime $created_at
- * @property string $updated_emp_id
+ * @property string $updated_emp_code
  * @property \Cake\I18n\FrozenTime $updated_at
  *
- * @property \App\Model\Entity\Emp $emp
- * @property \App\Model\Entity\CreatedEmp $created_emp
- * @property \App\Model\Entity\UpdatedEmp $updated_emp
+ * @property \App\Model\Entity\User[] $users
  */
 class Employee extends Entity
 {

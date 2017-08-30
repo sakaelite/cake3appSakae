@@ -9,9 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Employees Model
  *
- * @property \App\Model\Table\EmpsTable|\Cake\ORM\Association\BelongsTo $Emps
- * @property \App\Model\Table\CreatedEmpsTable|\Cake\ORM\Association\BelongsTo $CreatedEmps
- * @property \App\Model\Table\UpdatedEmpsTable|\Cake\ORM\Association\BelongsTo $UpdatedEmps
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\HasMany $Users
  *
  * @method \App\Model\Entity\Employee get($primaryKey, $options = [])
  * @method \App\Model\Entity\Employee newEntity($data = null, array $options = [])
@@ -37,16 +35,17 @@ class EmployeesTable extends Table
         $this->setTable('employees');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-
-        $this->belongsTo('Emps', [
-            'foreignKey' => 'emp_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('CreatedEmps', [
-            'foreignKey' => 'created_emp_id'
-        ]);
-        $this->belongsTo('UpdatedEmps', [
-            'foreignKey' => 'updated_emp_id'
+        $this->addBehavior('Timestamp',[
+                                        'events' => [
+                                                        'Model.beforeSave' => [
+                                                                                    'created_at' => 'new',
+                                                                                    'updated_at' => 'existing'
+                                                                                ]
+                                                    ]
+                            ]);
+                            
+        $this->hasMany('Users', [
+            'foreignKey' => 'employee_id'
         ]);
     }
 
@@ -63,13 +62,17 @@ class EmployeesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->allowEmpty('emp_code');
+
+        $validator
             ->allowEmpty('f_name');
 
         $validator
             ->allowEmpty('l_name');
 
         $validator
-            ->allowEmpty('e_add');
+            ->email('email')
+            ->allowEmpty('email');
 
         $validator
             ->integer('status_leader')
@@ -80,8 +83,16 @@ class EmployeesTable extends Table
             ->allowEmpty('status_emp');
 
         $validator
+            ->uuid('created_emp_code')
+            ->allowEmpty('created_emp_code');
+
+        $validator
             ->dateTime('created_at')
             ->allowEmpty('created_at');
+
+        $validator
+            ->uuid('updated_emp_code')
+            ->allowEmpty('updated_emp_code');
 
         $validator
             ->dateTime('updated_at')
@@ -99,9 +110,7 @@ class EmployeesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['emp_id'], 'Emps'));
-        $rules->add($rules->existsIn(['created_emp_id'], 'CreatedEmps'));
-        $rules->add($rules->existsIn(['updated_emp_id'], 'UpdatedEmps'));
+        $rules->add($rules->isUnique(['email']));
 
         return $rules;
     }

@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property \App\Model\Table\EmployeesTable|\Cake\ORM\Association\BelongsTo $Employees
+ *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -41,6 +43,10 @@ class UsersTable extends Table
                                                                                 ]
                                                     ]
                             ]);
+                            
+        $this->belongsTo('Employees', [
+            'foreignKey' => 'employee_id'
+        ]);
     }
 
     /**
@@ -62,6 +68,7 @@ class UsersTable extends Table
             ->allowEmpty('password');
 
         $validator
+            ->uuid('role')
             ->allowEmpty('role');
 
         $validator
@@ -72,10 +79,7 @@ class UsersTable extends Table
             ->dateTime('updated_at')
             ->allowEmpty('updated_at');
 
-        return $validator
-                ->notEmpty('username', 'A username is required')
-            ->notEmpty('password', 'A password is required')
-            ->notEmpty('role', 'A role is required');
+        return $validator;
     }
 
     /**
@@ -88,6 +92,7 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['username']));
+        $rules->add($rules->existsIn(['employee_id'], 'Employees'));
 
         return $rules;
     }

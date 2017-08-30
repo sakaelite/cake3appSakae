@@ -39,11 +39,11 @@ class NameAuthLevelsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => '455d9bdf-eb24-4148-bd56-dac7a1b57e4b',
+            'id' => 'b4845a9f-b2ce-4437-a427-e54ecad53260',
             'name' => 'Lorem ipsum dolor sit amet',
             'level1' => 1,
             'level2' => 1,
-            'created_at' => '2017-08-21 22:10:23'
+            'created_at' => '2017-08-28 11:30:34'
         ],
     ];
 }

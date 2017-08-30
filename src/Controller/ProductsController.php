@@ -2,43 +2,117 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
 
-class ProductsController extends AppController {
-	public function beforeFilter(Event $event) {
-		parent::beforeFilter($event);
-		$imgObj  = array(
-							'ShinkiTourokuMenu/touroku_seihin.gif'=>'Products',
-							'ShinkiTourokuMenu/touroku_genryou.gif'=>'Materials',
-							'ShinkiTourokuMenu/konpou_irisu.gif'=>'Konpous',
-							'ShinkiTourokuMenu/touroku_supplier.gif'=>'外注登録',
-							'ShinkiTourokuMenu/yobidashi_seihin.gif'=>'製品呼出',
-							'ShinkiTourokuMenu/shinki_tanka.gif'=>'単価登録',
-							'ShinkiTourokuMenu/TourokuNyuSyukko.gif'=>'組立品登録',
-							'ShinkiTourokuMenu/TourokuCustomer.gif'=>'顧客登録',
-							'ShinkiTourokuMenu/SyoumouCoTouroku.gif'=>'消耗品業者登録',
-							'1.gif'=>' ',
-							'2.gif'=>' ',
-							'3.gif'=>' '
-						);
-		$this->set('imgObj',$imgObj);
-   }
+/**
+ * Products Controller
+ *
+ * @property \App\Model\Table\ProductsTable $Products
+ *
+ * @method \App\Model\Entity\Product[] paginate($object = null, array $settings = [])
+ */
+class ProductsController extends AppController
+{
 
-	public function index(){
-		$data = $this->Products->find('all');
-		$this->set('data',$data);
-	}
-	
-	public function add()
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function index()
+    {
+        $this->paginate = [
+            'contain' => ['Customers', 'Materials']
+        ];
+        $products = $this->paginate($this->Products);
+
+        $this->set(compact('products'));
+        $this->set('_serialize', ['products']);
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Product id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $product = $this->Products->get($id, [
+            'contain' => ['Customers', 'Materials', 'Katakouzous', 'KensahyouHeads', 'Konpous', 'LabelInsideouts', 'LabelTypeProducts']
+        ]);
+
+        $this->set('product', $product);
+        $this->set('_serialize', ['product']);
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
     {
         $product = $this->Products->newEntity();
         if ($this->request->is('post')) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
             if ($this->Products->save($product)) {
                 $this->Flash->success(__('The product has been saved.'));
-                return $this->redirect(['action' => 'add']);
+
+                return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Unable to add the product.'));
+            $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
-	}
+        $customers = $this->Products->Customers->find('list', ['limit' => 200]);
+        $materials = $this->Products->Materials->find('list', ['limit' => 200]);
+        $this->set(compact('product', 'customers', 'materials'));
+        $this->set('_serialize', ['product']);
+    }
+
+    /**
+     * Edit method
+     *
+     * @param string|null $id Product id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+        $product = $this->Products->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $product = $this->Products->patchEntity($product, $this->request->getData());
+            if ($this->Products->save($product)) {
+                $this->Flash->success(__('The product has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The product could not be saved. Please, try again.'));
+        }
+        $customers = $this->Products->Customers->find('list', ['limit' => 200]);
+        $materials = $this->Products->Materials->find('list', ['limit' => 200]);
+        $this->set(compact('product', 'customers', 'materials'));
+        $this->set('_serialize', ['product']);
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Product id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $product = $this->Products->get($id);
+        if ($this->Products->delete($product)) {
+            $this->Flash->success(__('The product has been deleted.'));
+        } else {
+            $this->Flash->error(__('The product could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
 }

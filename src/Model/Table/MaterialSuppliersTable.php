@@ -9,10 +9,6 @@ use Cake\Validation\Validator;
 /**
  * MaterialSuppliers Model
  *
- * @property \App\Model\Table\SupsTable|\Cake\ORM\Association\BelongsTo $Sups
- * @property \App\Model\Table\HandiesTable|\Cake\ORM\Association\BelongsTo $Handies
- * @property \App\Model\Table\CreatedEmpsTable|\Cake\ORM\Association\BelongsTo $CreatedEmps
- * @property \App\Model\Table\UpdatedEmpsTable|\Cake\ORM\Association\BelongsTo $UpdatedEmps
  * @property \App\Model\Table\MaterialsTable|\Cake\ORM\Association\HasMany $Materials
  *
  * @method \App\Model\Entity\MaterialSupplier get($primaryKey, $options = [])
@@ -39,19 +35,15 @@ class MaterialSuppliersTable extends Table
         $this->setTable('material_suppliers');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-
-        $this->belongsTo('Sups', [
-            'foreignKey' => 'sup_id'
-        ]);
-        $this->belongsTo('Handies', [
-            'foreignKey' => 'handy_id'
-        ]);
-        $this->belongsTo('CreatedEmps', [
-            'foreignKey' => 'created_emp_id'
-        ]);
-        $this->belongsTo('UpdatedEmps', [
-            'foreignKey' => 'updated_emp_id'
-        ]);
+        $this->addBehavior('Timestamp',[
+                                        'events' => [
+                                                        'Model.beforeSave' => [
+                                                                                    'created_at' => 'new',
+                                                                                    'updated_at' => 'existing'
+                                                                                ]
+                                                    ]
+                            ]);
+                            
         $this->hasMany('Materials', [
             'foreignKey' => 'material_supplier_id'
         ]);
@@ -66,11 +58,15 @@ class MaterialSuppliersTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
+            ->uuid('id')
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('sup_name');
+            ->integer('supplier_code')
+            ->allowEmpty('supplier_code');
+
+        $validator
+            ->allowEmpty('name');
 
         $validator
             ->allowEmpty('address');
@@ -89,30 +85,19 @@ class MaterialSuppliersTable extends Table
             ->allowEmpty('delete_flag');
 
         $validator
+            ->allowEmpty('created_emp_code');
+
+        $validator
             ->dateTime('created_at')
             ->allowEmpty('created_at');
+
+        $validator
+            ->allowEmpty('updated_emp_code');
 
         $validator
             ->dateTime('updated_at')
             ->allowEmpty('updated_at');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['sup_id'], 'Sups'));
-        $rules->add($rules->existsIn(['handy_id'], 'Handies'));
-        $rules->add($rules->existsIn(['created_emp_id'], 'CreatedEmps'));
-        $rules->add($rules->existsIn(['updated_emp_id'], 'UpdatedEmps'));
-
-        return $rules;
     }
 }

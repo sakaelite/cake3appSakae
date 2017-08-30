@@ -8,7 +8,7 @@ use Cake\Validation\Validator;
 
 /**
  * NameAuthLevels Model
- *      
+ *
  * @method \App\Model\Entity\NameAuthLevel get($primaryKey, $options = [])
  * @method \App\Model\Entity\NameAuthLevel newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\NameAuthLevel[] newEntities(array $data, array $options = [])
@@ -41,6 +41,7 @@ class NameAuthLevelsTable extends Table
                                                                                 ]
                                                     ]
                             ]);
+
     }
 
     /**

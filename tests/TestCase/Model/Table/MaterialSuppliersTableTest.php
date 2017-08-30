@@ -25,11 +25,14 @@ class MaterialSuppliersTableTest extends TestCase
      */
     public $fixtures = [
         'app.material_suppliers',
-        'app.sups',
-        'app.handies',
-        'app.created_emps',
-        'app.updated_emps',
-        'app.materials'
+        'app.materials',
+        'app.products',
+        'app.customers',
+        'app.katakouzous',
+        'app.kensahyou_heads',
+        'app.konpous',
+        'app.label_insideouts',
+        'app.label_type_products'
     ];
 
     /**
@@ -72,16 +75,6 @@ class MaterialSuppliersTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
